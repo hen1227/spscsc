@@ -79,8 +79,13 @@ function setup() {
     colorMode(HSB, 360, 100, 100);
 
     // Center the canvas on the page
-    let canvas = createCanvas(800, 600);
-    canvas.parent("canvas"); // Assuming a div with an ID of "canvas-container" exists in your HTML file
+    if (window.innerWidth < 800) {
+        let canvas = createCanvas(window.innerWidth, window.innerWidth/8*6);
+        canvas.parent("canvas");
+    }else {
+        let canvas = createCanvas(800, 600);
+        canvas.parent("canvas");
+    }
 
     ballCountSlider = select("#ball-count-slider");
     ballCountSlider.input(updateBallCount);
