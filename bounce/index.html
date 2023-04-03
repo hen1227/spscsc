@@ -1,0 +1,29 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Color Bounce</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#212121"/>
+    <script type="text/javascript" src="../libraries/p5.min.js"></script>
+
+    <script src="index.js"></script>
+</head>
+<body>
+<div id="controls" class="form-check form-check-lg">
+    <p>Number of balls:</p>
+    <input type="range" id="ball-count-slider" min="1" max="300" value="200">
+    <p>Ball radius:</p>
+    <input type="range" id="ball-radius-slider" min="5" max="50" value="20">
+    <p>Show line:</p>
+    <input class="form-check-lg" type="checkbox" id="show-line-checkbox">
+    <button id="reset-btn">Reset</button>
+</div>
+
+<div id="canvas-container"></div>
+</body>
+</html>

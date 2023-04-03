@@ -1,0 +1,45 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: black;
+}
+
+#canvas-container {
+    position: absolute;
+    top: 150px;
+    bottom: auto; /* Change bottom to auto */
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 50px; /* Add padding-top to account for the controls div */
+}
+
+#controls {
+    color: aliceblue;
+    text-align: center;
+    display: flex;
+    padding: 20px;
+    /*background: black;*/
+
+    background: linear-gradient(to bottom, #212121, #121212);
+}
+
+#controls p {
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
+
+}
+#controls button {
+    color: black;
+
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
+
+}
