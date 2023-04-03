@@ -1,1 +1,1 @@
-# codingclub
+# SPS Coding Club
