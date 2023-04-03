@@ -54,6 +54,7 @@ const simulationSteps = 150;
 
 let ballWidth = 15;
 let drawLine = false;
+let startPos = -1;
 // const lineWidth = 15;
 
 const balls = [];
@@ -66,6 +67,12 @@ let resetButton;
 let ballRadiusSlider;
 let showLineCheckbox;
 
+let qrCodeImage;
+let toggleArrow;
+let isQrCodeHidden = false;
+
+let copyMessage;
+
 function setup() {
     // createCanvas(800, 600);
     // frameRate(600);
@@ -73,7 +80,7 @@ function setup() {
 
     // Center the canvas on the page
     let canvas = createCanvas(800, 600);
-    canvas.parent("canvas-container"); // Assuming a div with an ID of "canvas-container" exists in your HTML file
+    canvas.parent("canvas"); // Assuming a div with an ID of "canvas-container" exists in your HTML file
 
     ballCountSlider = select("#ball-count-slider");
     ballCountSlider.input(updateBallCount);
@@ -87,25 +94,23 @@ function setup() {
     showLineCheckbox = select("#show-line-checkbox");
     showLineCheckbox.changed(toggleShowLine);
 
+    qrCodeImage = select("#qr-code");
+    qrCodeImage.mousePressed(toggleQrCode);
+    toggleArrow = select("#qr-toggle-arrow");
+    toggleArrow.mousePressed(toggleQrCode);
+    copyMessage = select("#copy-message");
 
+    applySettingsFromUrl();
 
     ellipseCenter = createVector(width / 2, 0);
     ellipseWidth = width;
     ellipseHeight = width;
-
-    spawnBalls(); // Spawn n balls with random positions and velocities
 }
 
-// function mousePressed() {
-//     // Reset the simulation when the screen is clicked
-//     balls.length = 0; // Clear the balls array
-//     spawnBalls(); // Spawn n balls with random positions and velocities
-// }
-
-function spawnBalls() {
-    let startPos = random(30, width-30);
+function spawnBalls(pos) {
+    startPos = pos
     for (let i = 0; i < n; i++) {
-        const x = startPos + (2 * i / n);
+        const x = pos + (2 * i / n);
         const y = ballWidth;
         let hueValue = map(i, 0, n, 0, 360);
         let ballColor = color(hueValue, 100, 100);
@@ -149,9 +154,10 @@ function updateBallCount() {
     n = ballCountSlider.value();
 }
 
-function resetSimulation() {
+function resetSimulation(pos = random(30, width-30)) {
     balls.length = 0;
-    spawnBalls();
+    spawnBalls(pos);
+    generateQRCode();
 }
 
 function updateBallRadius() {
@@ -160,4 +166,83 @@ function updateBallRadius() {
 
 function toggleShowLine() {
     drawLine = !drawLine;
+}
+
+function applySettingsFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.has("count")) {
+        n = parseInt(urlParams.get("count"));
+        ballCountSlider.value(n);
+    }
+
+    if (urlParams.has("ballRadius")) {
+        ballWidth = parseInt(urlParams.get("ballRadius"));
+        ballRadiusSlider.value(ballWidth);
+    }
+
+    if (urlParams.has("showLine")) {
+        drawLine = urlParams.get("showLine") === "true";
+        showLineCheckbox.checked(drawLine);
+    }
+
+    if (urlParams.has("start")) {
+        startPos = parseInt(urlParams.get("start"));
+        resetSimulation(startPos);
+    }else{
+        resetSimulation();
+    }
+}
+
+function generateSettingsUrl() {
+    const baseUrl = window.location.href.split("?")[0];
+    const urlParams = new URLSearchParams();
+    urlParams.set("start", startPos);
+    urlParams.set("count", n);
+    urlParams.set("ballRadius", ballWidth);
+    urlParams.set("showLine", drawLine);
+    return `${baseUrl}?${urlParams.toString()}`;
+}
+
+function generateQRCode() {
+    const settingsUrl = generateSettingsUrl();
+    const qrCodeOptions = {
+        scale: 3,
+        color: {
+            dark: "#70e070", // Square color (default: black)
+            light: "#312331", // Background color (default: white)
+        },
+    };
+    QRCode.toDataURL(settingsUrl, qrCodeOptions, (err, url) => {
+        if (err) throw err;
+        qrCodeImage.attribute("src", url); // Set the QR code image's src attribute
+    });
+}
+
+function toggleQrCode() {
+    isQrCodeHidden = !isQrCodeHidden;
+
+    const settingsUrl = generateSettingsUrl();
+
+    navigator.clipboard.writeText(settingsUrl).then(() => {
+        // Show the "Copied Link to clipboard" message
+        copyMessage.style("display", "block");
+
+        // Hide the message after 1 second
+        setTimeout(() => {
+            copyMessage.style("display", "none");
+        }, 1000);
+    }).catch((err) => {
+        console.error("Could not copy text: ", err);
+    });
+
+    if (isQrCodeHidden) {
+        qrCodeImage.style("left", "-200px");
+        toggleArrow.style("left", "10px");
+        // toggleArrow.addClass("hidden");
+    } else {
+        qrCodeImage.style("left", "10px");
+        toggleArrow.style("left", "-200px");
+        // toggleArrow.removeClass("hidden");
+    }
 }

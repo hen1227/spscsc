@@ -9,12 +9,15 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#212121"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
     <script type="text/javascript" src="../libraries/p5.min.js"></script>
 
     <script src="index.js"></script>
 </head>
 <body>
 <div id="controls" class="form-check form-check-lg">
+<!--    <button id="generate-qr-btn">Share</button>-->
     <p>Number of balls:</p>
     <input type="range" id="ball-count-slider" min="1" max="300" value="200">
     <p>Ball radius:</p>
@@ -23,7 +26,11 @@
     <input class="form-check-lg" type="checkbox" id="show-line-checkbox">
     <button id="reset-btn">Reset</button>
 </div>
-
-<div id="canvas-container"></div>
+<div class="canvas-container">
+    <div id="canvas"></div>
+</div>
+<img id="qr-code" src=""/>
+<button id="qr-toggle-arrow">Share</button>
+<p id="copy-message" style="position: absolute; bottom: -20px; left: 10px; display: none;">Copied Link to clipboard</p>
 </body>
 </html>
