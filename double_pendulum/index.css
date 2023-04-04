@@ -70,3 +70,12 @@ body, html {
     background-color: #f9f9f9;
     border-radius: 3px;
 }
+
+@media (max-width: 1080px) {
+    .hide-when-small {
+        visibility: hidden;
+        height: 0;
+        margin: 0;
+        overflow: hidden;
+    }
+}

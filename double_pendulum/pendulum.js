@@ -11,6 +11,8 @@ class Pendulum {
     }
 
     update(dt) {
+        // https://en.wikipedia.org/wiki/Double_pendulum
+        // Chaos! It works, don't touch
         let num1 = -gravity * (2 * this.mass1 + this.mass2) * sin(this.angle1);
         let num2 = -this.mass2 * gravity * sin(this.angle1 - 2 * this.angle2);
         let num3 = -2 * sin(this.angle1 - this.angle2) * this.mass2;

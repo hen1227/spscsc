@@ -8,13 +8,13 @@ body, html {
 .canvas-container {
     position: absolute;
     top: 120px;
-    bottom: auto; /* Change bottom to auto */
+    bottom: auto;
     left: 0;
     right: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 50px; /* Add padding-top to account for the controls div */
+    padding-top: 50px;
 }
 
 #controls {
@@ -66,4 +66,14 @@ body, html {
     border: 1px solid #ccc;
     background-color: #f9f9f9;
     border-radius: 3px;
+}
+
+
+@media (max-width: 1080px) {
+    .hide-when-small {
+        visibility: hidden;
+        height: 0;
+        margin: 0;
+        overflow: hidden;
+    }
 }

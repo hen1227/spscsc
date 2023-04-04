@@ -214,10 +214,8 @@ function toggleQrCode() {
     const settingsUrl = generateSettingsUrl();
 
     navigator.clipboard.writeText(settingsUrl).then(() => {
-        // Show the "Copied Link to clipboard" message
         copyMessage.style("display", "block");
 
-        // Hide the message after 1 second
         setTimeout(() => {
             copyMessage.style("display", "none");
         }, 1000);

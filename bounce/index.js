@@ -1,5 +1,5 @@
 class Ball {
-    constructor(x, y, r, c) {
+    constructor(x, y, c) {
         this.pos = createVector(x, y);
         this.vel = createVector(0, 0);
         this.acc = createVector(0, 0);
@@ -55,7 +55,6 @@ const simulationSteps = 150;
 let ballWidth = 15;
 let drawLine = false;
 let startPos = -1;
-// const lineWidth = 15;
 
 const balls = [];
 let ellipseCenter
@@ -75,11 +74,8 @@ let isQrCodeHidden = false;
 let copyMessage;
 
 function setup() {
-    // createCanvas(800, 600);
-    // frameRate(600);
     colorMode(HSB, 360, 100, 100);
 
-    // Center the canvas on the page
     if (window.innerWidth < 800) {
         let canvas = createCanvas(window.innerWidth, window.innerWidth/8*6);
         canvas.parent("canvas");
@@ -125,7 +121,7 @@ function spawnBalls(pos) {
         let hueValue = map(i, 0, n, 0, 360);
         let ballColor = color(hueValue, 100, 100);
 
-        const ball = new Ball(x, y, ballWidth, ballColor);
+        const ball = new Ball(x, y, ballColor);
         balls.push(ball);
     }
 }
@@ -136,13 +132,12 @@ function draw() {
     let prevBallPos = createVector(-1, -1)
     for (const ball of balls) {
         for (let i = 0; i < simulationSteps; i++) {
-            ball.applyForce(createVector(0, 0.0003 / simulationSteps)); // Apply gravity
+            ball.applyForce(createVector(0, 0.0003 / simulationSteps));
             ball.update();
             resolveCollision(ball, ellipseCenter, ellipseWidth, ellipseHeight);
         }
         ball.display();
 
-        // print(prevBallPos);
         if (drawLine && prevBallPos.x !== -1){
             stroke(ball.color);
             strokeWeight(ballWidth*2);
@@ -222,6 +217,7 @@ function generateSettingsUrl() {
 
 function generateQRCode() {
     const settingsUrl = generateSettingsUrl();
+
     const qrCodeOptions = {
         scale: 3,
         color: {
@@ -241,10 +237,8 @@ function toggleQrCode() {
     const settingsUrl = generateSettingsUrl();
 
     navigator.clipboard.writeText(settingsUrl).then(() => {
-        // Show the "Copied Link to clipboard" message
         copyMessage.style("display", "block");
 
-        // Hide the message after 1 second
         setTimeout(() => {
             copyMessage.style("display", "none");
         }, 1000);
