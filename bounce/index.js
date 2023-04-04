@@ -188,8 +188,8 @@ function applySettingsFromUrl() {
     }
 
     if (urlParams.has("ballRadius")) {
-        ballWidth = parseInt(urlParams.get("ballRadius"));
-        ballRadiusSlider.value(ballWidth);
+        ballWidth = parseFloat(urlParams.get("ballRadius"));
+        ballRadiusSlider.value(ballWidth * width);
     }
 
     if (urlParams.has("showLine")) {
@@ -210,7 +210,7 @@ function generateSettingsUrl() {
     const urlParams = new URLSearchParams();
     urlParams.set("start", String(startPos / width));
     urlParams.set("count", n);
-    urlParams.set("ballRadius", ballWidth);
+    urlParams.set("ballRadius", String(ballWidth / width));
     urlParams.set("showLine", drawLine);
     return `${baseUrl}?${urlParams.toString()}`;
 }
