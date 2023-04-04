@@ -44,14 +44,14 @@ body, html {
 }
 
 #qr-code {
-    position: absolute;
+    position: fixed;
     bottom: 10px;
     left: 10px;
     transition: left 0.3s;
 }
 
 #qr-toggle-arrow {
-    position: absolute;
+    position: fixed;
     bottom: 10px;
     left: -100px;
     cursor: pointer;

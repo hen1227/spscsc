@@ -192,8 +192,8 @@ function applySettingsFromUrl() {
     }
 
     if (urlParams.has("start")) {
-        startPos = parseInt(urlParams.get("start"));
-        resetSimulation(startPos*width);
+        startPos = parseFloat(urlParams.get("start"));
+        resetSimulation(startPos * width);
     }else{
         resetSimulation();
     }
