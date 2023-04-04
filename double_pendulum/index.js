@@ -16,6 +16,7 @@ let pendulumCountSlider;
 let pendulumInnerLengthSlider;
 let pendulumOuterLengthSlider;
 let resetButton;
+let replayButton;
 
 let qrCodeImage;
 let toggleArrow;
@@ -50,6 +51,9 @@ function setup() {
 
     pendulumOuterLengthSlider = select("#pendulum-outer-length-slider");
     pendulumOuterLengthSlider.input(updatePendulumOuterLength);
+
+    replayButton = select("#replay-btn");
+    replayButton.mousePressed(replayPressed);
 
     resetButton = select("#reset-btn");
     resetButton.mousePressed(resetPressed);
@@ -107,6 +111,10 @@ function resetPressed(){
     v2 = random(-1, 1);
     v1 = random(-1, 1);
 
+    resetSimulation();
+}
+
+function replayPressed(){
     resetSimulation();
 }
 

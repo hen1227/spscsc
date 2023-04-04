@@ -64,6 +64,7 @@ let ellipseHeight = 0
 
 let ballCountSlider;
 let resetButton;
+let replayButton;
 let ballRadiusSlider;
 let showLineCheckbox;
 
@@ -89,6 +90,10 @@ function setup() {
 
     ballCountSlider = select("#ball-count-slider");
     ballCountSlider.input(updateBallCount);
+
+
+    replayButton = select("#replay-btn");
+    replayButton.mousePressed(replayPressed);
 
     resetButton = select("#reset-btn");
     resetButton.mousePressed(resetSimulation);
@@ -162,6 +167,12 @@ function updateBallCount() {
 function resetSimulation(pos = random(30, width-30)) {
     balls.length = 0;
     spawnBalls(pos);
+    generateQRCode();
+}
+
+function replayPressed() {
+    balls.length = 0;
+    spawnBalls(startPos);
     generateQRCode();
 }
 
