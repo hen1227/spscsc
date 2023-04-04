@@ -32,7 +32,7 @@ function setup() {
         canvas.parent("canvas");
         length1 = length2 = width/2;
     }else {
-        let canvas = createCanvas(800, 800);
+        let canvas = createCanvas(800, 600);
         canvas.parent("canvas");
     }
 
