@@ -27,10 +27,11 @@ function setup() {
 
     // Center the canvas on the page
     if (window.innerWidth < 800) {
-        let canvas = createCanvas(window.innerWidth, window.innerWidth/8*6);
+        let canvas = createCanvas(window.innerWidth, window.innerWidth);
         canvas.parent("canvas");
+        length1 = length2 = width/2;
     }else {
-        let canvas = createCanvas(800, 600);
+        let canvas = createCanvas(800, 800);
         canvas.parent("canvas");
     }
 
@@ -121,7 +122,8 @@ function draw() {
     let dt = 1.0 / 20.0;
     for (let pendulum of pendulums) {
         pendulum.update(dt);
-        pendulum.display();
+        pendulum.displayInner();
+        pendulum.displayOuter();
     }
 }
 

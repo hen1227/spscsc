@@ -193,7 +193,7 @@ function applySettingsFromUrl() {
 
     if (urlParams.has("start")) {
         startPos = parseInt(urlParams.get("start"));
-        resetSimulation(startPos);
+        resetSimulation(startPos*width);
     }else{
         resetSimulation();
     }
@@ -202,7 +202,7 @@ function applySettingsFromUrl() {
 function generateSettingsUrl() {
     const baseUrl = window.location.href.split("?")[0];
     const urlParams = new URLSearchParams();
-    urlParams.set("start", startPos);
+    urlParams.set("start", String(startPos / width));
     urlParams.set("count", n);
     urlParams.set("ballRadius", ballWidth);
     urlParams.set("showLine", drawLine);

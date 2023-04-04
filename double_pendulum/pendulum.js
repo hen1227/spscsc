@@ -31,7 +31,15 @@ class Pendulum {
         this.angle2 += this.angle2Velocity * dt;
     }
 
-    display() {
+    displayInner() {
+        let x1 = this.origin.x + length1 * sin(this.angle1);
+        let y1 = this.origin.y + length1 * cos(this.angle1);
+
+        stroke(this.color);
+        strokeWeight(lineWidth);
+        line(this.origin.x, this.origin.y, x1, y1);
+    }
+    displayOuter() {
         let x1 = this.origin.x + length1 * sin(this.angle1);
         let y1 = this.origin.y + length1 * cos(this.angle1);
         let x2 = x1 + length2 * sin(this.angle2);
@@ -39,7 +47,7 @@ class Pendulum {
 
         stroke(this.color);
         strokeWeight(lineWidth);
-        line(this.origin.x, this.origin.y, x1, y1);
         line(x1, y1, x2, y2);
     }
+
 }
