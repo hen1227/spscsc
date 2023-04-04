@@ -188,8 +188,8 @@ function applySettingsFromUrl() {
     }
 
     if (urlParams.has("ballRadius")) {
-        ballWidth = parseFloat(urlParams.get("ballRadius"));
-        ballRadiusSlider.value(ballWidth * width);
+        ballWidth = parseFloat(urlParams.get("ballRadius")) * width;
+        ballRadiusSlider.value(ballWidth);
     }
 
     if (urlParams.has("showLine")) {

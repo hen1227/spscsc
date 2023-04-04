@@ -151,12 +151,12 @@ function applySettingsFromUrl() {
     }
 
     if (urlParams.has("inner")) {
-        length1 = parseInt(urlParams.get("inner"));
+        length1 = parseFloat(urlParams.get("inner"))*width;
         pendulumInnerLengthSlider.value(length1);
     }
 
     if (urlParams.has("outer")) {
-        length2 = parseInt(urlParams.get("outer"));
+        length2 = parseFloat(urlParams.get("outer"))*width;
         pendulumOuterLengthSlider.value(length2);
     }
 
@@ -184,8 +184,8 @@ function generateSettingsUrl() {
     const urlParams = new URLSearchParams();
     urlParams.set("count", n);
     urlParams.set("width", lineWidth);
-    urlParams.set("inner", length1);
-    urlParams.set("outer", length2);
+    urlParams.set("inner", String(length1/width));
+    urlParams.set("outer", String(length2/width));
     urlParams.set("s1", start1);
     urlParams.set("s2", start2);
     urlParams.set("v1", v1);
