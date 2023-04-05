@@ -36,10 +36,7 @@ function setup() {
         canvas.parent("canvas");
     }
 
-    start1 = random(-PI/2, PI/2);
-    start2 = random(-PI/2, PI/2);
-    v2 = random(-1, 1);
-    v1 = random(-1, 1);
+    setRandomValues();
 
     colorMode(HSB, 360, 100, 100);
 
@@ -105,12 +102,15 @@ function updatePendulumWidth() {
     lineWidth = pendulumWidthSlider.value();
 }
 
-function resetPressed(){
-    start1 = random(-PI/2, PI/2);
-    start2 = random(-PI/2, PI/2);
-    v2 = random(-1, 1);
-    v1 = random(-1, 1);
+function setRandomValues() {
+    start1 = PI - random(-PI/2, PI/2);
+    start2 = random(-PI, PI);
+    v2 = random(-0.2, 0.2);
+    v1 = random(-0.2, 0.2);
+}
 
+function resetPressed(){
+    setRandomValues();
     resetSimulation();
 }
 
