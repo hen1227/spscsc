@@ -44,7 +44,7 @@ body {
     text-shadow: #292d4f 2px 3px 10px;
     font-weight: bolder;
 
-    background: linear-gradient(to right, red, yellow, aqua, transparent, transparent, transparent, transparent);
+    background: linear-gradient(to right, #7d0000, #7d7d00, #007d7d, transparent, transparent, transparent, transparent);
     background-position: 100% 0;
     background-size: 200% 100%;
     transition: all 1s;
@@ -53,7 +53,7 @@ body {
 
 .header .link button:hover, .header .link button:focus {
     background-position: 0 0;
-    color: #292d4f;
+    /*color: #292d4f;*/
 }
 
 .rod {
@@ -65,7 +65,6 @@ body {
 
     z-index: 5;
 }
-
 .coding-club {
     font-size: 6vw;
     font-weight: bold;
@@ -75,6 +74,15 @@ body {
     top: calc(10% + 5px);
     left: 50%;
     transform: translateX(-50%);
+}
+
+h1 {
+    color: white;
+}
+h3 {
+    margin-top: -15px;
+    padding-left: 320px;
+    color: white;
 }
 
 .coding-club span {
