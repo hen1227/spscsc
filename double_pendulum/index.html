@@ -12,8 +12,13 @@
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
     <script type="text/javascript" src="../libraries/p5.min.js"></script>
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
     <script src="index.js"></script>
     <script src="pendulum.js"></script>
+    <script src="../record.js"></script>
 </head>
 <body>
 <div id="controls" class="form-check form-check-lg">
@@ -22,10 +27,12 @@
     <input class="hide-when-small" type="range" id="pendulum-count-slider" min="1" max="500" value="200">
     <p class="hide-when-small">Pendulums width:</p>
     <input class="hide-when-small" type="range" id="pendulum-width-slider" min="1" max="25" value="5">
-    <p class="hide-when-small">Inner Length</p>
-    <input class="hide-when-small" type="range" id="pendulum-inner-length-slider" min="10" max="150" value="100">
-    <p class="hide-when-small" >Outer Length</p>
-    <input class="hide-when-small" type="range" id="pendulum-outer-length-slider" min="10" max="150" value="100">
+    <p class="hide-when-small">Opacity: </p>
+    <input class="hide-when-small" type="range" id="pendulum-opacity-slider" min="0" max="255" value="100">
+    <p class="hide-when-small" >Show Inner Bobs: </p>
+    <input class="hide-when-small" class="form-check-lg" type="checkbox" id="pendulum-show-inner-bobs">
+    <p class="hide-when-small" >Show Outer Bobs: </p>
+    <input class="hide-when-small" class="form-check-lg" type="checkbox" id="pendulum-show-outer-bobs">
 <!--    <p>Show line:</p>-->
 <!--    <input class="form-check-lg" type="checkbox" id="show-line-checkbox">-->
     <button id="reset-btn">Reset</button>
@@ -37,6 +44,7 @@
 
 <img id="qr-code" src=""/>
 <button id="qr-toggle-arrow">Share</button>
+<!--<button id="record-btn">Start Recording</button>-->
 <p id="copy-message" style="position: absolute; bottom: -20px; left: 10px; display: none;">Copied Link to clipboard</p>
 </body>
 </html>

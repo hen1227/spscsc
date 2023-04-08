@@ -5,6 +5,9 @@ let length1 = 150;
 let length2 = 150;
 let lineWidth = 5;
 let gravity = 10;
+let opacity = 100;
+let showInnerBobs = false;
+let showOuterBobs = false;
 
 let start1 = 0;
 let start2 = 0;
@@ -13,16 +16,24 @@ let v1 = 0;
 
 let pendulumWidthSlider;
 let pendulumCountSlider;
-let pendulumInnerLengthSlider;
-let pendulumOuterLengthSlider;
+// let pendulumInnerLengthSlider;
+// let pendulumOuterLengthSlider;
+let pendulumOpacitySlider;
+let showInnerBobsCheckbox;
+let showOuterBobsCheckbox;
+
 let resetButton;
 let replayButton;
+
+let recordButton;
 
 let qrCodeImage;
 let toggleArrow;
 let isQrCodeHidden = false;
 
 let copyMessage;
+
+let canvasRecordingSystem;
 
 function setup() {
 
@@ -32,22 +43,32 @@ function setup() {
         canvas.parent("canvas");
         length1 = length2 = width/2;
     }else {
-        let canvas = createCanvas(800, 600);
+        let canvas = createCanvas(800, 800);
         canvas.parent("canvas");
     }
 
-    setRandomValues();
+    canvasRecordingSystem = new CanvasRecorder()
 
-    colorMode(HSB, 360, 100, 100);
+    setRandomValues();
 
     pendulumCountSlider = select("#pendulum-count-slider");
     pendulumCountSlider.input(updatePendulumCount);
 
-    pendulumInnerLengthSlider = select("#pendulum-inner-length-slider");
-    pendulumInnerLengthSlider.input(updatePendulumInnerLength);
+    // pendulumInnerLengthSlider = select("#pendulum-inner-length-slider");
+    // pendulumInnerLengthSlider.input(updatePendulumInnerLength);
 
-    pendulumOuterLengthSlider = select("#pendulum-outer-length-slider");
-    pendulumOuterLengthSlider.input(updatePendulumOuterLength);
+    showInnerBobsCheckbox = select("#pendulum-show-inner-bobs");
+    showInnerBobsCheckbox.changed(toggleShowInnerBobs);
+
+    showOuterBobsCheckbox = select("#pendulum-show-outer-bobs");
+    showOuterBobsCheckbox.changed(toggleShowOuterBobs);
+
+    pendulumOpacitySlider = select("#pendulum-opacity-slider");
+    pendulumOpacitySlider.input(updateOpacity);
+
+
+    // recordButton = select("#record-btn");
+    // recordButton.mousePressed(toggleRecording);
 
     replayButton = select("#replay-btn");
     replayButton.mousePressed(replayPressed);
@@ -68,7 +89,21 @@ function setup() {
     applySettingsFromUrl();
 }
 
+function draw() {
+    background(color(0, 0, 0));
+
+    let dt = 1.0 / 20.0;
+    for (let pendulum of pendulums) {
+        pendulum.update(dt);
+        pendulum.displayInner();
+        pendulum.displayOuter();
+    }
+
+    canvasRecordingSystem.recordFrame();
+}
+
 function spawnPendulums(){
+    colorMode(HSB, 360, 100, 100);
     for (let i = 0; i < n; i++) {
         let x = width / 2;
         let y = height / 2;
@@ -84,10 +119,23 @@ function spawnPendulums(){
         newPen.angle2Velocity = v2;
         pendulums[i] = newPen;
     }
+    colorMode(RGB)
 }
 
 function updatePendulumCount() {
     n = pendulumCountSlider.value();
+}
+
+function updateOpacity(){
+    opacity = pendulumOpacitySlider.value();
+}
+
+function toggleShowInnerBobs(){
+    showInnerBobs = !showInnerBobs;
+}
+
+function toggleShowOuterBobs(){
+    showOuterBobs = !showOuterBobs;
 }
 
 function updatePendulumInnerLength() {
@@ -103,6 +151,8 @@ function updatePendulumWidth() {
 }
 
 function setRandomValues() {
+    length1 = width / 4 -10;
+    length2 = width / 4 -10;
     start1 = PI - random(-PI/2, PI/2);
     start2 = random(-PI, PI);
     v2 = random(-0.2, 0.2);
@@ -124,18 +174,11 @@ function resetSimulation() {
     generateQRCode();
 }
 
-function draw() {
-    background(color(0, 100, 0));
-
-    let dt = 1.0 / 20.0;
-    for (let pendulum of pendulums) {
-        pendulum.update(dt);
-        pendulum.displayInner();
-        pendulum.displayOuter();
-    }
+function toggleRecording() {
+    canvasRecordingSystem.toggleRecording();
+    recordButton.html(canvasRecordingSystem.isRecording ? "Stop Recording" : "Start Recording");
+    resetSimulation();
 }
-
-
 
 function applySettingsFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -152,12 +195,27 @@ function applySettingsFromUrl() {
 
     if (urlParams.has("inner")) {
         length1 = parseFloat(urlParams.get("inner"))*width;
-        pendulumInnerLengthSlider.value(length1);
+        // pendulumInnerLengthSlider.value(length1);
     }
 
     if (urlParams.has("outer")) {
         length2 = parseFloat(urlParams.get("outer"))*width;
-        pendulumOuterLengthSlider.value(length2);
+        // pendulumOuterLengthSlider.value(length2);
+    }
+
+    if (urlParams.has("opacity")) {
+        opacity = parseFloat(urlParams.get("opacity"));
+        pendulumOpacitySlider.value(opacity);
+    }
+
+    if (urlParams.has("b1")) {
+        showInnerBobs = urlParams.get("b1") === "true";
+        showInnerBobsCheckbox.checked(showInnerBobs);
+    }
+
+    if (urlParams.has("b2")) {
+        showOuterBobs = urlParams.get("b2") === "true";
+        showOuterBobsCheckbox.checked(showOuterBobs);
     }
 
     if (urlParams.has("s1")) {
@@ -184,12 +242,15 @@ function generateSettingsUrl() {
     const urlParams = new URLSearchParams();
     urlParams.set("count", n);
     urlParams.set("width", lineWidth);
-    urlParams.set("inner", String(length1/width));
-    urlParams.set("outer", String(length2/width));
+    urlParams.set("opacity", opacity);
+    // urlParams.set("inner", String(length1/width));
+    // urlParams.set("outer", String(length2/width));
     urlParams.set("s1", start1);
     urlParams.set("s2", start2);
     urlParams.set("v1", v1);
     urlParams.set("v2", v2);
+    urlParams.set("b1", showInnerBobs);
+    urlParams.set("b2", showOuterBobs);
     return `${baseUrl}?${urlParams.toString()}`;
 }
 

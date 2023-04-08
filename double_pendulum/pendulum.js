@@ -36,10 +36,14 @@ class Pendulum {
     displayInner() {
         let x1 = this.origin.x + length1 * sin(this.angle1);
         let y1 = this.origin.y + length1 * cos(this.angle1);
-
-        stroke(this.color);
+        stroke(this.color.levels[0],this.color.levels[1],this.color.levels[2], opacity);
         strokeWeight(lineWidth);
         line(this.origin.x, this.origin.y, x1, y1);
+        if(showInnerBobs){
+            noStroke();
+            fill(this.color);
+            ellipse(x1, y1, lineWidth*2)
+        }
     }
     displayOuter() {
         let x1 = this.origin.x + length1 * sin(this.angle1);
@@ -47,9 +51,15 @@ class Pendulum {
         let x2 = x1 + length2 * sin(this.angle2);
         let y2 = y1 + length2 * cos(this.angle2);
 
-        stroke(this.color);
+        stroke(this.color.levels[0],this.color.levels[1],this.color.levels[2], opacity);
         strokeWeight(lineWidth);
         line(x1, y1, x2, y2);
+
+        if(showOuterBobs){
+            noStroke();
+            fill(this.color);
+            ellipse(x2, y2, lineWidth*2)
+        }
     }
 
 }
