@@ -1,7 +1,7 @@
 const balls = [];
 const updatesPerFrame = 200;
 
-const circleRadius = 300;
+let circleRadius = 300;
 
 let ballRadius = 20;
 let numBalls = 500;
@@ -24,6 +24,7 @@ function setup() {
 
     if (window.innerWidth < 800) {
         let canvas = createCanvas(window.innerWidth, window.innerWidth);
+        circleRadius = width;
         canvas.parent("canvas");
     }else {
         let canvas = createCanvas(800, 800);
