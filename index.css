@@ -11,9 +11,9 @@ body {
 
 .header {
     top: 0;
-    width: 80vw;
+    width: 75vw;
     height: 10vh;
-    margin-left: 10vw;
+    margin-left: 5vw;
     position: absolute;
     justify-content: center;
     align-items: center;
@@ -22,9 +22,9 @@ body {
 
 .header .link {
     float: left;
-    width: 30vw;
+    width: 22vw;
     height: 8vh;
-    margin-left: 5vw;
+    margin-left: 2vw;
     margin-top: 0.5vh;
 
     background-color: #292d4f;
