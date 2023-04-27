@@ -4,9 +4,10 @@ const updatesPerFrame = 200;
 let circleRadius = 300;
 
 let ballRadius = 20;
-let numBalls = 500;
+let numBalls = 25;
 let offsetPercent = 100;
 let speed = 2;
+let playSound = true;
 
 
 let ballRadiusSlider, numBallSlider, offsetPercentSlider, speedSlider;
@@ -18,6 +19,20 @@ let startY = 0;
 let startAngle = 100;
 
 let isQrCodeHidden = false;
+
+// Set ADSR values: Attack, Decay, Sustain, Release
+let soundAttack = 0.01;
+let soundDecay = 0.01;
+let soundSustain = 0.1;
+let soundRelease = 0.1;
+
+let lowestPitch = 100;
+let highestPitch = 800;
+
+// Options: 'sine','triangle', 'sawtooth', 'square'
+let soundStyle = "sine";
+let masterAmplitude = 0.1;
+
 
 function setup() {
     colorMode(HSB, 360, 100, 100);
@@ -91,9 +106,10 @@ function spawnBalls(){
     for (let i = 0; i < numBalls; i++) {
 
         let hueValue = map(i, 0, numBalls, 0, 360);
+        let pitchValue = map(i, 0, numBalls, lowestPitch, highestPitch);
         let ballColor = color(hueValue, 100, 100);
 
-        let ball = new Ball(startX+(i*7 /numBalls), startY+(i*circleRadius/100*offsetPercent /numBalls), ballColor, startVelX* cos(startAngle), startVelY* sin(startAngle));
+        let ball = new Ball(startX+(i*7 /numBalls), startY+(i*circleRadius/100*offsetPercent /numBalls), ballColor, pitchValue, startVelX* cos(startAngle), startVelY* sin(startAngle));
 
         balls.push(ball);
     }
@@ -128,6 +144,10 @@ function replayPressed(){
 }
 
 function resetSimulation() {
+
+    for (let i = 0; i < balls.length; i++) {
+        balls[i].dispose();
+    }
     balls.length = 0;
     spawnBalls();
     generateQRCode();
@@ -219,12 +239,24 @@ function toggleQrCode() {
 }
 
 class Ball {
-    constructor(x, y, color, vx, vy, radius = 10) {
+    constructor(x, y, color, pitch, vx, vy, radius = 10) {
         this.x = x;
         this.y = y;
         this.vx = vx;
         this.vy = vy;
         this.color = color;
+
+
+        this.pitch = pitch;
+        this.oscillator = new p5.Oscillator(soundStyle);
+        this.oscillator.freq(this.pitch);
+        this.oscillator.amp(0);
+        this.oscillator.start();
+
+        this.envelope = new p5.Env();
+        this.envelope.setADSR(soundAttack, soundDecay, soundSustain, soundRelease); // Set ADSR values: Attack, Decay, Sustain, Release
+        this.envelope.setRange(masterAmplitude, 0.0); // Set amplitude range: initial amplitude, final amplitude
+
     }
 
     update(dt) {
@@ -250,9 +282,27 @@ class Ball {
             const overlap = (ballRadius + distanceToCenter) - circleRadius;
             this.x -= overlap * normalX;
             this.y -= overlap * normalY;
+
+            this.playBeep(); // Adjust the beep duration as needed
         }
     }
 
+    playBeep() {
+        // this.oscillator.amp(1, 0.01); // Set the amplitude to 0.5 with a 0.01s fade-in time
+        // setTimeout(() => {
+        //     this.oscillator.amp(0, 0.01); // Set the amplitude back to 0 with a 0.01s fade-out time
+        // }, duration * 1000);
+
+        if(playSound){
+            this.envelope.play(this.oscillator);
+        }
+    }
+
+    dispose() {
+        this.oscillator.stop();
+        this.oscillator.dispose();
+        this.envelope.dispose();
+    }
 
     isInsideCircle(circleRadius) {
         return dist(0, 0, this.x, this.y) <= circleRadius - ballRadius;

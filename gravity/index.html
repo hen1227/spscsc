@@ -5,29 +5,34 @@
     <link rel="stylesheet" href="index.css">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Circular Projectiles</title>
+    <title>Gravity Cascade</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#212121"/>
 
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
-    <script type="text/javascript" src="../libraries/p5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.js"></script>
+    <script src="https://unpkg.com/ccapture.js@1.1.0/build/CCapture.all.min.js"></script>
+    <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>-->
 
-    <script src="index.js"></script>
+    <!--    <script src="../libraries/p5.min.js"></script>-->
+
+
+<!--    <script src="gravity3D.js"></script>-->
+    <script src="gravity.js"></script>
 </head>
 <body>
 <div id="controls" class="form-check form-check-lg">
     <!--    <button id="generate-qr-btn">Share</button>-->
     <button id="replay-btn">Replay</button>
     <p class="hide-when-small"> Number of balls:</p>
-    <input class="hide-when-small" type="range" id="ball-count-slider" min="1" max="500" value="4">
+    <input class="hide-when-small" type="range" id="ball-count-slider" min="1" max="100" value="50">
     <p class="hide-when-small">Ball radius:</p>
-    <input class="hide-when-small" type="range" id="ball-radius-slider" min="5" max="50" value="8">
-    <p class="hide-when-small">Ball offset percent:</p>
-    <input class="hide-when-small" type="range" id="ball-offset-slider" min="1" max="100" value="70">
-    <p class="hide-when-small">Speed:</p>
-    <input class="hide-when-small" type="range" id="ball-speed-slider" min="1" max="10" value="3">
+    <input class="hide-when-small" type="range" id="ball-radius-slider" min="2" max="20" value="6">
+    <p class="hide-when-small">Center force:</p>
+    <input class="hide-when-small" type="range" id="center-force-slider" min="1" max="100" value="70">
+    <p class="hide-when-small">Circle start</p>
+    <input class="hide-when-small" class="form-check-lg" type="checkbox" id="is-circle-checkbox">
     <button id="reset-btn">Reset</button>
 </div>
 
