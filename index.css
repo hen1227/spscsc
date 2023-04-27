@@ -11,7 +11,7 @@ body {
 
 .header {
     top: 0;
-    width: 75vw;
+    width: 80vw;
     height: 10vh;
     margin-left: 5vw;
     position: absolute;
@@ -22,7 +22,7 @@ body {
 
 .header .link {
     float: left;
-    width: 22vw;
+    width: 17vw;
     height: 8vh;
     margin-left: 2vw;
     margin-top: 0.5vh;
