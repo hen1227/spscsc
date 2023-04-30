@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email List</title>
+</head>
+<body>
+    <h1>Join SPSCSC Emailing List</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('signup') }}" method="POST">
+        <label for="email">Email:</label>
+        <input type="email" name="email" required>
+        <button type="submit" name="action" value="subscribe">Subscribe</button>
+        <button type="submit" name="action" value="unsubscribe">Unsubscribe</button>
+    </form>
+</body>
+</html>

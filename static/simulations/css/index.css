@@ -1,0 +1,48 @@
+body {
+    background-color: black;
+    font-family: 'Courier New', monospace;
+    margin: 0;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+}
+
+.links-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    text-align: center;
+}
+
+.link {
+    font-size: 1.5rem;
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.link img{
+    height: 180px;
+}
+
+.link:hover {
+    /*color: black;*/
+    /*background-color: white;*/
+    border-color: transparent;
+}
+
+.hidden-images {
+    display: none;
+}
+
+.hidden-images img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    pointer-events: none;
+}
