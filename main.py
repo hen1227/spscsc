@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
+from mcrcon import MCRcon
 from urllib.request import urlopen 
 import os
 from dotenv import load_dotenv
@@ -40,6 +41,30 @@ def gravity():
 @app.route('/simulations/pendulum-tunnel')
 def pendulum_tunnel():
    return render_template("/simulations/pendulum_tunnel/index.html")
+
+
+
+def send_command(command):
+    with MCRcon("localhost", "your_secure_password", 25575) as mcr:
+        response = mcr.command(command)
+    return response
+
+@app.route('/minecraft/whitelist', methods=['GET', 'POST'])
+def whitelist():
+    if request.method == 'POST':
+        username = request.form['username']
+        send_command(f'whitelist add {username}')
+        return redirect(url_for('whitelist'))
+    return render_template('minecraft/whitelist.html')
+
+@app.route('/minecraft/chat', methods=['GET', 'POST'])
+def chat():
+    if request.method == 'POST':
+        message = request.form['message']
+        send_command(f'say {message}')
+        return redirect(url_for('chat'))
+    chat_messages = send_command('list').splitlines()[-10:]
+    return render_template('minecraft/chat.html', chat_messages=chat_messages)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
