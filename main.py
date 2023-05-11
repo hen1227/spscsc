@@ -45,7 +45,7 @@ def pendulum_tunnel():
 
 
 def send_command(command):
-    with MCRcon("localhost", "your_secure_password", 25575) as mcr:
+    with MCRcon("localhost", os.getenv('RCON_KEY'), 25575) as mcr:
         response = mcr.command(command)
     return response
 
