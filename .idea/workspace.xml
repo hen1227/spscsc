@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61c093ef-80fe-47d0-a364-b0432ae8a8d9" name="Changes" comment="Added WSGI Deployment option.">
+    <list default="true" id="61c093ef-80fe-47d0-a364-b0432ae8a8d9" name="Changes" comment="Added website for Minecraft Server Communication">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/wsgi.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +73,7 @@
       <workItem from="1682810181709" duration="636000" />
       <workItem from="1682831099751" duration="12908000" />
       <workItem from="1682884986481" duration="3893000" />
+      <workItem from="1683767202701" duration="563000" />
     </task>
     <task id="LOCAL-00001" summary="Changed website to be hosted by flask backend">
       <created>1682884902540</created>
@@ -100,7 +103,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682951407066</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added website for Minecraft Server Communication">
+      <created>1683767233039</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1683767233039</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -124,6 +134,7 @@
     </ignored-roots>
     <MESSAGE value="Changed website to be hosted by flask backend" />
     <MESSAGE value="Added WSGI Deployment option." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added WSGI Deployment option." />
+    <MESSAGE value="Added website for Minecraft Server Communication" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added website for Minecraft Server Communication" />
   </component>
 </project>
