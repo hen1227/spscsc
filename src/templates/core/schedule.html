@@ -1,0 +1,102 @@
+{% extends "_base.html" %}
+{% block css %}
+    <link rel="stylesheet" href="{{url_for('static', filename='core/css/schedule.css')}}">
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1 class="text-center mt-4">Events Schedule</h1>
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr class="text-white">
+                    <th scope="col">#</th>
+                    <th scope="col">Event</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Time / Date</th>
+                    <th scope="col">RSVP</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                <tr>
+                    <th class="text-white" scope="row">{{ event.id }}</th>
+                    <td class="text-white">{{ event.title }}</td>
+                    <td class="text-white">{{ event.location }}</td>
+                    <td class="text-white">{{ event.time_date.strftime('%m/%d at %I:%M %p') }}</td>
+                    <td class="text-white">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('core.rsvp', event_id=event.id, response='yes') }}" class="btn btn-success">✔</a>
+                        <a href="{{ url_for('core.rsvp', event_id=event.id, response='no') }}" class="btn btn-danger">✘</a>
+                        {% else %}
+                        <p>Login to RSVP</p>
+                        {% endif %}
+                    </td>
+                    <td class="text-white">
+                        {% if current_user.is_admin %}
+                        <a href="{{ url_for('core.delete_event', event_id=event.id, response='no') }}" class="btn btn-danger">Delete</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if current_user.is_admin %}
+        <div class="row">
+
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h4 style="color:white;" class="text-center mt-4">Create Event</h4>
+                <main class="form-signin w-100 m-auto">
+                    <form role="form" method="post" action="">
+                      <div class="form-floating">
+                        {{ form.title(placeholder="Title", class="form-control mb-2") }}
+                        {{ form.title.label }}
+                          {% if form.title.errors %}
+                            {% for error in form.title.errors %}
+                              <div class="alert alert-danger" role="alert">
+                                {{ error }}
+                              </div>
+                            {% endfor %}
+                          {% endif %}
+                      </div>
+                      <div class="form-floating">
+                        {{ form.location(placeholder="Location", class="form-control mb-2") }}
+                        {{ form.location.label }}
+                          {% if form.location.errors %}
+                            {% for error in form.location.errors %}
+                              <div class="alert alert-danger" role="alert">
+                                {{ error }}
+                              </div>
+                            {% endfor %}
+                          {% endif %}
+                      </div>
+                      <div class="form-floating">
+                        {{ form.date(placeholder="Date `mm/dd`", class="form-control mb-2") }}
+                        {{ form.date.label }}
+                          {% if form.date.errors %}
+                            {% for error in form.date.errors %}
+                              <div class="alert alert-danger" role="alert">
+                                {{ error }}
+                              </div>
+                            {% endfor %}
+                          {% endif %}
+                      </div>
+                      <div class="form-floating">
+                        {{ form.time(placeholder="Time", class="form-control mb-3") }}
+                        {{ form.time.label }}
+                          {% if form.time.errors %}
+                            {% for error in form.time.errors %}
+                              <div class="alert alert-danger" role="alert">
+                                {{ error }}
+                              </div>
+                            {% endfor %}
+                          {% endif %}
+                      </div>
+                      <button class="w-100 btn btn-lg btn-primary" type="submit">Create!</button>
+                    </form>
+                  </main>
+            </div>
+        </div>  
+        {% endif %}
+    </div>
+{% endblock %}

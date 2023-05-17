@@ -1,0 +1,53 @@
+<!-- Navigation -->
+<link rel="stylesheet" href="{{url_for('static', filename='core/css/navigation.css')}}">
+
+<header style="position: absolute; top: 0; width: 100%; height:8%" class="p-3 text-bg-dark">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="{{ url_for('core.home') }}" class="nav-link px-2 text-secondary">Home</a></li>
+                <li><a href="{{ url_for('core.schedule') }}" class="nav-link px-2 text-secondary">Schedule</a></li>
+                <li><a href="{{ url_for('minecraft.info') }}" class="nav-link px-2 text-secondary">Minecraft</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle px-2 text-secondary" href="#" role="button">Projects</a>
+                    <div class="dropdown-content">
+                        <a class="dropdown-item" href="{{ url_for('simulations.double_pendulum') }}">
+                            <img src="{{url_for('static', filename='simulations/images/double_pendulum_preview.png')}}" alt="Double Pendulum Simulation" style="width: 100px; height: 100px;">
+                            Double Pendulum
+                        </a>
+                        <a class="dropdown-item" href="{{ url_for('simulations.color_bounce') }}">
+                            <img src="{{url_for('static', filename='simulations/images/bounce_preview.png')}}" alt="Color Bounce Simulation" style="width: 100px; height: 100px;">
+                            Color Bounce
+                        </a>
+                        <a class="dropdown-item" href="{{ url_for('simulations.circular_projectiles') }}">
+                            <img src="{{url_for('static', filename='simulations/images/circular_projectiles_preview.png')}}" alt="Circular Projectiles Simulation" style="width: 100px; height: 100px;">
+                            Circular Projectiles
+                        </a>
+                        <a class="dropdown-item" href="{{ url_for('simulations.gravity') }}">
+                            <img src="{{url_for('static', filename='simulations/images/gravity_preview.png')}}" alt="Gravity Simulation" style="width: 100px; height: 100px;">
+                            Gravity
+                        </a>
+                        <a class="dropdown-item" href="{{ url_for('simulations.pendulum_tunnel') }}">
+                            <img src="{{url_for('static', filename='simulations/images/pendulum_tunnel_preview.png')}}" alt="Pendulum Tunnel" style="width: 100px; height: 100px;">
+                            Pendulum Tunnel
+                        </a>
+<!--                        <a class="dropdown-item" href="{{ url_for('simulations.oscillating_charges') }}">-->
+<!--                            <img src="{{url_for('static', filename='simulations/images/oscillating_charges_preview.png')}}" alt="Oscillating Charges" style="width: 100px; height: 100px;">-->
+<!--                            Oscillating Charges-->
+<!--                        </a>-->
+                    </div>
+                </li>
+                <li><a href="{{ url_for('core.emails') }}" class="nav-link px-2 text-secondary">Emails</a></li>
+            </ul>
+
+            <div class="text-end">
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('accounts.logout') }}"><button type="button" class="btn btn-danger me-2">Logout</button></a>
+                {% else %}
+                <a href="{{ url_for('accounts.login') }}"><button type="button" class="btn btn-outline-light me-2">Login</button></a>
+                <a href="{{ url_for('accounts.register') }}"><button type="button" class="btn btn-success">Sign up</button></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</header>

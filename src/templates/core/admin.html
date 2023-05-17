@@ -1,0 +1,34 @@
+{% extends "_base.html" %}
+{% block content %}
+    <div class="container">
+        <h1 class="text-center mt-4">Events Schedule</h1>
+        <button>Create Event</button>
+        <button>Send Group Email</button>
+
+        <thead>
+            <tr class="text-white">
+                <th scope="col">#</th>
+                <th scope="col">Event</th>
+                <th scope="col">Location</th>
+                <th scope="col">Time / Date</th>
+                <th scope="col">RSVP</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <th class="text-white" scope="row">{{ user.id }}</th>
+                <th class="text-white" scope="row">{{ user.is_admin }}</th>
+                <td class="text-white">{{ user.email }}</td>
+                <td class="text-white">{{ user.is_confirmed }}</td>
+                <td class="text-white">
+                    <a href="{{ url_for('core.delete_user', user_id=user.id, response='no') }}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        
+    </div>
+
+{% endblock %}
