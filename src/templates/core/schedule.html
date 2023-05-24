@@ -8,7 +8,7 @@
         <table class="table table-striped mt-4">
             <thead>
                 <tr class="text-white">
-                    <th scope="col">#</th>
+                    <!-- <th scope="col">#</th> -->
                     <th scope="col">Event</th>
                     <th scope="col">Location</th>
                     <th scope="col">Time / Date</th>
@@ -19,7 +19,7 @@
             <tbody>
                 {% for event in events %}
                 <tr>
-                    <th class="text-white" scope="row">{{ event.id }}</th>
+                    <!-- <th class="text-white" scope="row">{{ event.id }}</th> -->
                     <td class="text-white">{{ event.title }}</td>
                     <td class="text-white">{{ event.location }}</td>
                     <td class="text-white">{{ event.time_date.strftime('%m/%d at %I:%M %p') }}</td>

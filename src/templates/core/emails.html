@@ -1,0 +1,10 @@
+{% extends "_base.html" %}
+{% block css %}
+    <link rel="stylesheet" href="{{url_for('static', filename='core/css/emails.css')}}">
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1 class="text-center mt-4">Email options</h1>
+        <a href="{{ url_for('core.subscribe')}}"><button>Send email to myself</button></a>
+    </div>
+{% endblock %}

@@ -7,6 +7,8 @@ from src import db
 from flask_login import current_user, login_required
 from .forms import CreateEventForm
 
+from src.utils.email import send_email
+
 from datetime import datetime
 
 core_bp = Blueprint("core", __name__)
@@ -46,6 +48,21 @@ def schedule():
 def rsvp(event_id=-1, response="blank"):
     print(f"{current_user} responded {response} to event {event_id}")
     return redirect(url_for('core.schedule'))
+
+
+@core_bp.route("/subscribe/")
+@login_required
+@check_is_confirmed
+def subscribe():
+    print(f"{current_user} is subscribing to the email list")
+    User.query.filter(User.id == current_user.id).update({"is_subscribed": True})
+    db.session.commit()
+
+    html = render_template("emails/meeting_today_email.html", user=current_user)
+    subject = "You have received this random email because you subscribed to the email list"
+    send_email(current_user.email, subject, html)
+
+    return redirect(url_for('core.emails'))
 
 @core_bp.route("/delete_event/<int:event_id>")
 @login_required

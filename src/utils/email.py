@@ -1,5 +1,4 @@
 from flask_mail import Message
-import smtplib
 
 from src import app, mail
 
